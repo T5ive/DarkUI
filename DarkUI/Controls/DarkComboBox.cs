@@ -24,6 +24,24 @@ namespace DarkUI.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new ComboBoxStyle DropDownStyle { get; set; }
 
+        private int _startIndex;
+        public int StartIndex
+        {
+            get => _startIndex;
+            set
+            {
+                _startIndex = value < 0 ? 0 : value;
+                try
+                {
+                    base.SelectedIndex = value < 0 ? 0 : value;
+                }
+                catch
+                {
+                }
+                Invalidate();
+            }
+        }
+
         private Bitmap _buffer;
 
         public DarkComboBox() : base()
