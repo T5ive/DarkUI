@@ -10,8 +10,8 @@ namespace DarkUI
         public DarkTabControl()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
-            BackColor = Colors.GreyBackground;
-            ForeColor = Colors.LightText;
+            BackColor = ThemeProvider.Theme.Colors.GreyBackground;
+            ForeColor = ThemeProvider.Theme.Colors.LightText;
         }
 
         protected override void CreateHandle()
@@ -26,9 +26,9 @@ namespace DarkUI
         {
             var g = e.Graphics;
             var rect = ClientRectangle;
-            var bgColor = Colors.HeaderBackground;
-            var darkColor = Colors.DarkBorder;
-            var lightColor = Colors.LightBorder;
+            var bgColor = ThemeProvider.Theme.Colors.HeaderBackground;
+            var darkColor = ThemeProvider.Theme.Colors.DarkBorder;
+            var lightColor = ThemeProvider.Theme.Colors.LightBorder;
 
             // Draw header
             using (var b = new SolidBrush(bgColor))
@@ -43,7 +43,7 @@ namespace DarkUI
                 GetTabRect(tabIndex);
                 if (tabIndex != SelectedIndex)
                 {
-                    using (var brush = new SolidBrush(Colors.LightText))
+                    using (var brush = new SolidBrush(ThemeProvider.Theme.Colors.LightText))
                     {
                         var textRect = new Rectangle(GetTabRect(tabIndex).Location, GetTabRect(tabIndex).Size);
                         var format = new StringFormat
@@ -67,7 +67,7 @@ namespace DarkUI
                 if (itemIndex == SelectedIndex)
                 {
                     // Background Selected Tab
-                    g.FillPath(new SolidBrush(Colors.GreySelection),
+                    g.FillPath(new SolidBrush(ThemeProvider.Theme.Colors.GreySelection),
                         RoundRectangle.RoundedTopRect(new Rectangle(new Point(itemBoundsRect.X - 1, itemBoundsRect.Y - 1), new Size(itemBoundsRect.Width + 1, itemBoundsRect.Height))));
 
                     // Border Selected Tab
@@ -81,7 +81,7 @@ namespace DarkUI
                     {
                         g.DrawString(TabPages[itemIndex].Text, 
                             new Font(Font.Name, Font.Size, FontStyle.Regular),
-                            new SolidBrush(Colors.LightText), new Rectangle(GetTabRect(itemIndex).Location, GetTabRect(itemIndex).Size), new StringFormat
+                            new SolidBrush(ThemeProvider.Theme.Colors.LightText), new Rectangle(GetTabRect(itemIndex).Location, GetTabRect(itemIndex).Size), new StringFormat
                         {
                             LineAlignment = StringAlignment.Center,
                             Alignment = StringAlignment.Center
