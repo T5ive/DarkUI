@@ -1,5 +1,4 @@
 ﻿using DarkUI.Config;
-using DarkUI.Icons;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -86,6 +85,12 @@ namespace DarkUI.Controls
         protected override void OnSelectedValueChanged(EventArgs e)
         {
             base.OnSelectedValueChanged(e);
+            Invalidate();
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
             Invalidate();
         }
 
