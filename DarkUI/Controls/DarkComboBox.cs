@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using DarkUI.Extensions;
 
 namespace DarkUI.Controls
 {
@@ -23,7 +24,7 @@ namespace DarkUI.Controls
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new ComboBoxStyle DropDownStyle { get; set; }
-
+        
         private int _startIndex;
         public int StartIndex
         {
@@ -205,12 +206,17 @@ namespace DarkUI.Controls
             var rect = e.Bounds;
 
             var textColor = Colors.LightText;
-            var fillColor = Colors.LightBackground;
+            Color fillColor;
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected ||
-                (e.State & DrawItemState.Focus) == DrawItemState.Focus ||
-                (e.State & DrawItemState.NoFocusRect) != DrawItemState.NoFocusRect)
+                (e.State & DrawItemState.Focus) == DrawItemState.Focus)
+            {
                 fillColor = Colors.BlueSelection;
+            }
+            else
+            {
+                fillColor = Colors.LightBackground;
+            }
 
             using (var b = new SolidBrush(fillColor))
             {
