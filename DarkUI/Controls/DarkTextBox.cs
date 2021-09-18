@@ -15,6 +15,6 @@ namespace DarkUI.Controls
             BorderStyle = BorderStyle.FixedSingle;
         }
 
-        #endregion
+        #endregion Constructor Region
     }
 }
