@@ -1,5 +1,6 @@
 ﻿using DarkUI.Collections;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace DarkUI.Controls
@@ -151,6 +152,53 @@ namespace DarkUI.Controls
                 }
 
                 return path;
+            }
+        }
+
+        public string[] FullPathList
+        {
+            get
+            {
+                var parent = ParentNode;
+                var path = Text;
+
+                while (parent != null)
+                {
+                    path = $"{parent.Text}\\{path}";
+                    parent = parent.ParentNode;
+                }
+                
+                return path.Split('\\');
+            }
+        }
+
+        public string Header
+        {
+            get
+            {
+                var parent = ParentNode;
+                var path = Text;
+
+                while (parent != null)
+                {
+                    path = $"{parent.Text}\\{path}";
+                    parent = parent.ParentNode;
+                }
+
+                return path.Split('\\')[0];
+            }
+        }
+
+        public bool IsNodes
+        {
+            get
+            {
+                var parent = ParentNode;
+                if (parent == null)
+                {
+                    return false;
+                }
+                return true;
             }
         }
 
