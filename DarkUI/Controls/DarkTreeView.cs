@@ -92,6 +92,28 @@ namespace DarkUI.Controls
             get { return _selectedNodes; }
         }
 
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DarkTreeNode SelectedNode
+        {
+            get
+            {
+                try
+                {
+                    if (_selectedNodes.Count > 0)
+                    {
+                        return _selectedNodes[0];
+                    }
+
+                    return new DarkTreeNode();
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         [Category("Appearance")]
         [Description("Determines the height of tree nodes.")]
         [DefaultValue(20)]
@@ -141,6 +163,11 @@ namespace DarkUI.Controls
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IComparer<DarkTreeNode> TreeViewNodeSorter { get; set; }
+
+        [Category("Content Menu")]
+        [Description("Right click to clear all selected.")]
+        [DefaultValue(false)]
+        public bool ClearSelected { get; set; }
 
         #endregion
 
@@ -767,7 +794,8 @@ namespace DarkUI.Controls
 
                         return;
                     }
-                    else if (button == MouseButtons.Right)
+
+                    if (button == MouseButtons.Right)
                     {
                         if (MultiSelect && ModifierKeys == Keys.Shift)
                             return;
@@ -781,6 +809,11 @@ namespace DarkUI.Controls
                         return;
                     }
                 }
+            }
+
+            if (rect.X < location.X && rect.Y < location.Y && ClearSelected)
+            {
+                SelectedNodes.Clear();
             }
 
             if (node.Expanded)
