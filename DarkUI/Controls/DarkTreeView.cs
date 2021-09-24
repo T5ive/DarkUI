@@ -1045,6 +1045,12 @@ namespace DarkUI.Controls
             return null;
         }
 
+        public void TryRefresh()
+        {
+            Invalidate();
+            UpdateNodes();
+        }
+
         #endregion
 
         #region Drag & Drop Region
