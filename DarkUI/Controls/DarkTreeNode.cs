@@ -1,6 +1,5 @@
 ﻿using DarkUI.Collections;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace DarkUI.Controls
@@ -10,13 +9,16 @@ namespace DarkUI.Controls
         #region Event Region
 
         public event EventHandler<ObservableListModified<DarkTreeNode>> ItemsAdded;
+
         public event EventHandler<ObservableListModified<DarkTreeNode>> ItemsRemoved;
 
         public event EventHandler TextChanged;
+
         public event EventHandler NodeExpanded;
+
         public event EventHandler NodeCollapsed;
 
-        #endregion
+        #endregion Event Region
 
         #region Field Region
 
@@ -29,7 +31,7 @@ namespace DarkUI.Controls
 
         private bool _expanded;
 
-        #endregion
+        #endregion Field Region
 
         #region Property Region
 
@@ -167,7 +169,7 @@ namespace DarkUI.Controls
                     path = $"{parent.Text}\\{path}";
                     parent = parent.ParentNode;
                 }
-                
+
                 return path.Split('\\');
             }
         }
@@ -222,7 +224,7 @@ namespace DarkUI.Controls
             return false;
         }
 
-        #endregion
+        #endregion Property Region
 
         #region Constructor Region
 
@@ -237,7 +239,7 @@ namespace DarkUI.Controls
             Text = text;
         }
 
-        #endregion
+        #endregion Constructor Region
 
         #region Method Region
 
@@ -260,7 +262,7 @@ namespace DarkUI.Controls
             }
         }
 
-        #endregion
+        #endregion Method Region
 
         #region Event Handler Region
 
@@ -302,6 +304,6 @@ namespace DarkUI.Controls
                 ItemsRemoved(this, e);
         }
 
-        #endregion
+        #endregion Event Handler Region
     }
 }
