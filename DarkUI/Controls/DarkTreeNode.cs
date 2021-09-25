@@ -49,19 +49,19 @@ namespace DarkUI.Controls
             }
         }
 
-        public Rectangle ExpandArea { get; set; }
+        internal Rectangle ExpandArea { get; set; }
 
-        public Rectangle IconArea { get; set; }
+        internal Rectangle IconArea { get; set; }
 
-        public Rectangle TextArea { get; set; }
+        internal Rectangle TextArea { get; set; }
 
-        public Rectangle FullArea { get; set; }
+        internal Rectangle FullArea { get; set; }
 
-        public bool ExpandAreaHot { get; set; }
+        internal bool ExpandAreaHot { get; set; }
 
         public Bitmap Icon { get; set; }
 
-        public Bitmap ExpandedIcon { get; set; }
+        internal Bitmap ExpandedIcon { get; set; }
 
         public bool Expanded
         {
@@ -209,6 +209,8 @@ namespace DarkUI.Controls
         public DarkTreeNode NextVisibleNode { get; set; }
 
         public int VisibleIndex { get; set; }
+
+        public bool LockExpand { get; set; }
 
         public bool IsNodeAncestor(DarkTreeNode node)
         {
