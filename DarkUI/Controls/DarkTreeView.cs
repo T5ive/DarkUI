@@ -19,10 +19,12 @@ namespace DarkUI.Controls
         #region Event Region
 
         public event EventHandler SelectedNodesChanged;
+
         public event EventHandler AfterNodeExpand;
+
         public event EventHandler AfterNodeCollapse;
 
-        #endregion
+        #endregion Event Region
 
         #region Field Region
 
@@ -53,7 +55,7 @@ namespace DarkUI.Controls
         private List<DarkTreeNode> _dragNodes;
         private Point _dragPos;
 
-        #endregion
+        #endregion Field Region
 
         #region Property Region
 
@@ -169,7 +171,17 @@ namespace DarkUI.Controls
         [DefaultValue(false)]
         public bool ClearSelected { get; set; }
 
-        #endregion
+        [Category("Content Menu")]
+        [Description("Show or Hide expand and collapse icon.")]
+        [DefaultValue(true)]
+        public bool ShowExpandIcon { get; set; }
+
+        [Category("Content Menu")]
+        [Description("Lock expand and collapse")]
+        [DefaultValue(false)]
+        public bool LockExpand { get; set; }
+
+        #endregion Property Region
 
         #region Constructor Region
 
@@ -184,7 +196,7 @@ namespace DarkUI.Controls
             LoadIcons();
         }
 
-        #endregion
+        #endregion Constructor Region
 
         #region Dispose Region
 
@@ -215,7 +227,7 @@ namespace DarkUI.Controls
             base.Dispose(disposing);
         }
 
-        #endregion
+        #endregion Dispose Region
 
         #region Event Handler Region
 
@@ -231,7 +243,6 @@ namespace DarkUI.Controls
 
             if (TreeViewNodeSorter != null)
                 Nodes.Sort(TreeViewNodeSorter);
-
             UpdateNodes();
         }
 
@@ -282,6 +293,7 @@ namespace DarkUI.Controls
 
         private void Nodes_NodeExpanded(object sender, EventArgs e)
         {
+            if (LockExpand) return;
             UpdateNodes();
 
             if (AfterNodeExpand != null)
@@ -290,6 +302,7 @@ namespace DarkUI.Controls
 
         private void Nodes_NodeCollapsed(object sender, EventArgs e)
         {
+            if (LockExpand) return;
             UpdateNodes();
 
             if (AfterNodeCollapse != null)
@@ -358,7 +371,6 @@ namespace DarkUI.Controls
 
             if (_provisionalDragging)
             {
-
                 if (_provisionalNode != null)
                 {
                     var pos = _dragPos;
@@ -558,7 +570,7 @@ namespace DarkUI.Controls
             }
         }
 
-        #endregion
+        #endregion Event Handler Region
 
         #region Method Region
 
@@ -602,7 +614,7 @@ namespace DarkUI.Controls
             var isOdd = false;
             var index = 0;
             DarkTreeNode prevNode = null;
-            
+
             for (var i = 0; i <= Nodes.Count - 1; i++)
             {
                 var node = Nodes[i];
@@ -654,7 +666,10 @@ namespace DarkUI.Controls
                 node.IconArea = new Rectangle(node.ExpandArea.Right + 2, iconTop, _iconSize, _iconSize);
             else
                 node.IconArea = new Rectangle(node.ExpandArea.Right, iconTop, 0, 0);
-
+            if (!ShowExpandIcon)
+            {
+                node.IconArea = new Rectangle(node.ExpandArea.Right - 10, iconTop, 0, 0);
+            }
             using (var g = CreateGraphics())
             {
                 var textSize = (int)(g.MeasureString(node.Text, Font).Width);
@@ -767,6 +782,7 @@ namespace DarkUI.Controls
             {
                 if (node.ExpandArea.Contains(location))
                 {
+                    if (LockExpand || node.LockExpand) return;
                     if (button == MouseButtons.Left)
                         node.Expanded = !node.Expanded;
                 }
@@ -828,6 +844,7 @@ namespace DarkUI.Controls
             var rect = GetNodeFullRowArea(node);
             if (rect.Contains(location))
             {
+                if (LockExpand || node.LockExpand) return;
                 if (!node.ExpandArea.Contains(location))
                     node.Expanded = !node.Expanded;
 
@@ -1051,7 +1068,7 @@ namespace DarkUI.Controls
             UpdateNodes();
         }
 
-        #endregion
+        #endregion Method Region
 
         #region Drag & Drop Region
 
@@ -1226,7 +1243,7 @@ namespace DarkUI.Controls
         protected virtual void NodesMoved(List<DarkTreeNode> nodesMoved)
         { }
 
-        #endregion
+        #endregion Drag & Drop Region
 
         #region Paint Region
 
@@ -1282,7 +1299,8 @@ namespace DarkUI.Controls
                 else if (!node.Expanded && node.ExpandAreaHot && SelectedNodes.Contains(node))
                     icon = _nodeClosedHoverSelected;
 
-                g.DrawImageUnscaled(icon, pos);
+                if (ShowExpandIcon)
+                    g.DrawImageUnscaled(icon, pos);
             }
 
             // 3. Draw icon
@@ -1314,6 +1332,6 @@ namespace DarkUI.Controls
             }
         }
 
-        #endregion
+        #endregion Paint Region
     }
 }
