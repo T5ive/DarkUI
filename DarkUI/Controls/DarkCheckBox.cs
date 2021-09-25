@@ -283,17 +283,11 @@ namespace DarkUI.Controls
             var size = ThemeProvider.Theme.Sizes.CheckBoxSize;
 
             var textColor = ThemeProvider.Theme.Colors.LightText;
-            var borderColor = ThemeProvider.Theme.Colors.LightText;
-            var fillColor = Checked ? ThemeProvider.Theme.Colors.DarkBackground : ThemeProvider.Theme.Colors.LightestBackground;
+            Color borderColor;
+            Color fillColor;
 
             if (Enabled)
             {
-                if (Focused)
-                {
-                    borderColor = ThemeProvider.Theme.Colors.BlueHighlight;
-                    fillColor = ThemeProvider.Theme.Colors.BlueSelection;
-                }
-
                 if (_controlState == DarkControlState.Hover)
                 {
                     borderColor = ThemeProvider.Theme.Colors.BlueHighlight;
@@ -303,6 +297,11 @@ namespace DarkUI.Controls
                 {
                     borderColor = ThemeProvider.Theme.Colors.GreyHighlight;
                     fillColor = ThemeProvider.Theme.Colors.GreySelection;
+                }
+                else
+                {
+                    borderColor = ThemeProvider.Theme.Colors.BlueHighlight;
+                    fillColor = ThemeProvider.Theme.Colors.BlueSelection;
                 }
             }
             else
