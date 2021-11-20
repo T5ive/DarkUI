@@ -170,7 +170,15 @@ namespace DarkUI.Controls
                     parent = parent.ParentNode;
                 }
 
-                return path.Split('\\');
+                try
+                {
+                    return path.Split('\\');
+                }
+                catch
+                {
+                    return new []{path};
+                }
+                
             }
         }
 
@@ -187,7 +195,14 @@ namespace DarkUI.Controls
                     parent = parent.ParentNode;
                 }
 
-                return path.Split('\\')[0];
+                try
+                {
+                    return path.Split('\\')[0];
+                }
+                catch
+                {
+                    return Text;
+                }
             }
         }
 
@@ -210,6 +225,7 @@ namespace DarkUI.Controls
 
         public int VisibleIndex { get; set; }
 
+        public int Index { get; set; }
         public bool LockExpand { get; set; }
 
         public bool IsNodeAncestor(DarkTreeNode node)

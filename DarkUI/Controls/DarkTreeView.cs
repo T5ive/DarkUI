@@ -173,7 +173,7 @@ namespace DarkUI.Controls
 
         [Category("Content Menu")]
         [Description("Show or Hide expand and collapse icon.")]
-        [DefaultValue(true)]
+        [field:DefaultValue(true)]
         public bool ShowExpandIcon { get; set; }
 
         [Category("Content Menu")]
@@ -612,24 +612,25 @@ namespace DarkUI.Controls
 
             var yOffset = 0;
             var isOdd = false;
+            var visibleIndex = 0;
             var index = 0;
             DarkTreeNode prevNode = null;
 
             for (var i = 0; i <= Nodes.Count - 1; i++)
             {
                 var node = Nodes[i];
-                UpdateNode(node, ref prevNode, 0, ref yOffset, ref isOdd, ref index);
+                UpdateNode(node, ref prevNode, 0, ref yOffset, ref isOdd, ref visibleIndex,ref index, false);
             }
 
             ContentSize = new Size(ContentSize.Width, yOffset);
 
-            VisibleNodeCount = index;
+            VisibleNodeCount = visibleIndex;
 
             Invalidate();
         }
 
         private void UpdateNode(DarkTreeNode node, ref DarkTreeNode prevNode, int indent, ref int yOffset,
-                                ref bool isOdd, ref int index)
+                                ref bool isOdd, ref int visibleIndex, ref int index, bool expanded)
         {
             UpdateNodeBounds(node, yOffset, indent);
 
@@ -638,8 +639,15 @@ namespace DarkUI.Controls
             node.Odd = isOdd;
             isOdd = !isOdd;
 
-            node.VisibleIndex = index;
-            index++;
+            if (!expanded)
+            {
+                node.Index = index;
+                index++;
+            }
+
+            node.VisibleIndex = visibleIndex;
+            visibleIndex++;
+
 
             node.PrevVisibleNode = prevNode;
 
@@ -647,11 +655,10 @@ namespace DarkUI.Controls
                 prevNode.NextVisibleNode = node;
 
             prevNode = node;
-
             if (node.Expanded)
             {
                 foreach (var childNode in node.Nodes)
-                    UpdateNode(childNode, ref prevNode, indent + Indent, ref yOffset, ref isOdd, ref index);
+                    UpdateNode(childNode, ref prevNode, indent + Indent, ref yOffset, ref isOdd, ref visibleIndex, ref index, true);
             }
         }
 
