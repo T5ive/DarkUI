@@ -38,6 +38,7 @@ namespace DarkUI.Controls
                 }
                 catch
                 {
+                    //
                 }
                 Invalidate();
             }
@@ -164,8 +165,8 @@ namespace DarkUI.Controls
 
                 var icon = ScrollIcons.scrollbar_arrow_hot;
                 g.DrawImageUnscaled(icon,
-                                    rect.Right - icon.Width - (ThemeProvider.Theme.Sizes.Padding / 2),
-                                    (rect.Height / 2) - (icon.Height / 2));
+                                    rect.Right - icon.Width - ThemeProvider.Theme.Sizes.Padding / 2,
+                                    rect.Height / 2 - icon.Height / 2);
 
                 var text = SelectedItem != null ? SelectedItem.ToString() : Text;
 
@@ -175,8 +176,8 @@ namespace DarkUI.Controls
 
                     var modRect = new Rectangle(rect.Left + padding,
                                                 rect.Top + padding,
-                                                rect.Width - icon.Width - (ThemeProvider.Theme.Sizes.Padding / 2) - (padding * 2),
-                                                rect.Height - (padding * 2));
+                                                rect.Width - icon.Width - ThemeProvider.Theme.Sizes.Padding / 2 - padding * 2,
+                                                rect.Height - padding * 2);
 
                     var stringFormat = new StringFormat
                     {
@@ -233,8 +234,8 @@ namespace DarkUI.Controls
 
                     var modRect = new Rectangle(rect.Left + padding,
                         rect.Top + padding,
-                        rect.Width - (padding * 2),
-                        rect.Height - (padding * 2));
+                        rect.Width - padding * 2,
+                        rect.Height - padding * 2);
 
                     var stringFormat = new StringFormat
                     {
