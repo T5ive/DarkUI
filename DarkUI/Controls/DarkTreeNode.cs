@@ -176,9 +176,9 @@ namespace DarkUI.Controls
                 }
                 catch
                 {
-                    return new []{path};
+                    return new[] { path };
                 }
-                
+
             }
         }
 
