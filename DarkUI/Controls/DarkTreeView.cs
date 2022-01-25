@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace DarkUI.Controls
 {
@@ -173,7 +174,7 @@ namespace DarkUI.Controls
 
         [Category("Content Menu")]
         [Description("Show or Hide expand and collapse icon.")]
-        [field:DefaultValue(true)]
+        [field: DefaultValue(true)]
         public bool ShowExpandIcon { get; set; }
 
         [Category("Content Menu")]
@@ -619,7 +620,7 @@ namespace DarkUI.Controls
             for (var i = 0; i <= Nodes.Count - 1; i++)
             {
                 var node = Nodes[i];
-                UpdateNode(node, ref prevNode, 0, ref yOffset, ref isOdd, ref visibleIndex,ref index, false);
+                UpdateNode(node, ref prevNode, 0, ref yOffset, ref isOdd, ref visibleIndex, ref index, false);
             }
 
             ContentSize = new Size(ContentSize.Width, yOffset);
@@ -874,6 +875,33 @@ namespace DarkUI.Controls
             _anchoredNodeEnd = node;
 
             Invalidate();
+        }
+        public void SelectNode(string name)
+        {
+            _selectedNodes.Clear();
+
+            foreach (var node in Nodes.Where(node => NodeChild(name, node)))
+            {
+                break;
+            }
+
+            Invalidate();
+        }
+
+        private bool NodeChild(string name, DarkTreeNode nodes)
+        {
+            if (nodes.Text == name)
+            {
+                _selectedNodes.Add(nodes);
+                return true;
+            }
+
+            foreach (var node in nodes.Nodes)
+            {
+                NodeChild(name, node);
+            }
+
+            return false;
         }
 
         public void SelectNodes(DarkTreeNode startNode, DarkTreeNode endNode)
