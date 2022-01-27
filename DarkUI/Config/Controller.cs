@@ -5,17 +5,37 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using DarkUI.Docking;
 
 namespace DarkUI.Config;
 
 public static class Controller
 {
-    public static void ThemeUpdate(Form form, bool changed = false)
+    public static void ThemeUpdate(Form form, bool changed = false, bool refresh = true)
     {
-        if (changed) return;
+        if (changed)
+            return;
+
         form.BackColor = ThemeProvider.Theme.Colors.GreyBackground;
         GetControls(form);
-        form.Refresh();
+
+        if (refresh)
+            form.Refresh();
+    }
+    public static void ThemeUpdate(DarkDockPanel panel, bool changed = false)
+    {
+        if (changed)
+            return;
+
+        GetControls(panel);
+    }
+
+    public static void ThemeUpdate(Control control, bool changed = false)
+    {
+        if (changed)
+            return;
+
+        GetControls(control);
     }
 
     private static void GetControls(Form form)
@@ -36,7 +56,37 @@ public static class Controller
                 GetChildControls(control);
             }
         }
+    }
 
+    private static void GetControls(Control control)
+    {
+        foreach (var obj in control.Controls)
+        {
+            var control2 = (Control)obj;
+            string[] ctrl = { "Button", "CheckBox", "ComboBox", "DataGridView", "Label", "LinkLabel", "ListBox", "ListView", "RadioButton", "RichTextBox", "TextBox", "StatusStrip", "MenuStrip" };
+            string[] ctrlChild = { "GroupBox", "Panel", "TabPage", "Region", "DockGroup", "DockDocument" };
+            var ctrlName = control2.GetType().Name;
+            if (CheckController(control2, ctrl))
+            {
+                UpdateColor(control2, ctrlName);
+            }
+
+            if (CheckController(control2, ctrlChild))
+            {
+                GetChildControls(control2);
+            }
+        }
+        control.BackColor = ThemeProvider.Theme.Colors.GreyBackground;
+    }
+
+    private static void GetControls(DarkDockPanel panel)
+    {
+        foreach (var obj in panel.Controls)
+        {
+            var obj2 = (Control)obj;
+            GetChildControls(obj2);
+            obj2.BackColor = ThemeProvider.Theme.Colors.GreyBackground;
+        }
     }
 
     private static void GetChildControls(Control control)
