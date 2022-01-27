@@ -201,6 +201,7 @@ namespace DarkUI.Controls
 
         #region Dispose Region
 
+        private DarkTreeNode _oldSelected = new DarkTreeNode();
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -283,8 +284,12 @@ namespace DarkUI.Controls
 
         private void SelectedNodes_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (SelectedNodesChanged != null)
-                SelectedNodesChanged(this, null);
+            if (SelectedNodesChanged == null) return;
+            if (_selectedNodes is { Count: 0 }) return;
+            if (_selectedNodes[^1] == _oldSelected) return;
+
+            SelectedNodesChanged(this, null);
+            _oldSelected = _selectedNodes[^1];
         }
 
         private void Nodes_TextChanged(object sender, EventArgs e)
