@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using DarkUI.Config;
 
 namespace DarkUI.Forms
 {
@@ -13,7 +14,6 @@ namespace DarkUI.Forms
 
         [DllImport("DwmApi")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
-
         protected override void OnHandleCreated(EventArgs e)
         {
             if (DwmSetWindowAttribute(Handle, 19, new[] { 1 }, 4) != 0)
@@ -59,6 +59,7 @@ namespace DarkUI.Forms
         {
             Text = title;
             _message = message;
+            lblText.ForeColor = ThemeProvider.Theme.Colors.LightText;
 
             DialogButtons = buttons;
             SetIcon(icon);

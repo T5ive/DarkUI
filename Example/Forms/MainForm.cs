@@ -196,15 +196,18 @@ namespace Example
 
         private void darkToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             ThemeProvider.Theme = new DarkTheme();
-            BackColor = ThemeProvider.Theme.Colors.GreyBackground;
+            ThemeProvider.ThemeUpdate(this);
+            //BackColor = ThemeProvider.Theme.Colors.GreyBackground;
             this.Refresh();
         }
 
         private void lightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ThemeProvider.Theme = new LightTheme();
-            BackColor = ThemeProvider.Theme.Colors.GreyBackground;
+            ThemeProvider.ThemeUpdate(this);
+            //BackColor = ThemeProvider.Theme.Colors.GreyBackground;
             this.Refresh();
         }
 
@@ -223,7 +226,7 @@ namespace Example
             var state = SerializerHelper.Deserialize<DockPanelState>(path);
             DockPanel.RestoreDockPanelState(state, GetContentBySerializationKey);
         }
-         
+
         private DarkDockContent GetContentBySerializationKey(string key)
         {
             foreach (var window in _toolWindows)
@@ -236,6 +239,6 @@ namespace Example
         }
 
         #endregion
-        
+
     }
 }
