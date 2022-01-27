@@ -124,8 +124,7 @@ public static class Controller
             obj2.ForeColor = ThemeProvider.Theme.Colors.LightText;
             if (obj2.GetType().Name.IsEndsWith("MenuItem"))
             {
-                var obj3 = (ToolStripMenuItem)obj2;
-                UpdateMenuStripChild(obj3);
+                UpdateMenuStripChild((ToolStripMenuItem)obj2);
             }
         }
     }
