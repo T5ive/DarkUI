@@ -61,7 +61,7 @@ namespace DarkUI.Controls
 
         public Bitmap Icon { get; set; }
 
-        internal Bitmap ExpandedIcon { get; set; }
+        public Bitmap ExpandedIcon { get; set; }
 
         public bool Expanded
         {
