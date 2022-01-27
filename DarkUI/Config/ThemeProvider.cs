@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 
 namespace DarkUI.Config
 {
@@ -38,62 +34,6 @@ namespace DarkUI.Config
                     OnPropertyChangedInstance("Theme");
                 }
             }
-        }
-
-        public static void ThemeUpdate(Form form)
-        {
-            form.BackColor = Theme.Colors.GreyBackground;
-            UpdateForm(form);
-        }
-
-        private static void UpdateForm(Form form)
-        {
-            foreach (var obj in form.Controls)
-            {
-                var control = (Control)obj;
-                string[] ctrl = { "Button", "CheckBox", "ComboBox", "DataGridView", "Label", "LinkLabel", "ListBox", "ListView", "RadioButton", "RichTextBox", "TextBox" };
-                string[] ctrlChild = { "GroupBox", "Panel", "TabPage", "Region", "DockGroup", "DockDocument" };
-
-                if (CheckController(control, ctrl))
-                {
-                    UpdateColor(control);
-                }
-
-                if (CheckController(control, ctrlChild))
-                {
-                    UpdateChildControls(control);
-                }
-            }
-        }
-
-        private static void UpdateChildControls(Control control)
-        {
-            foreach (var obj in control.Controls)
-            {
-                var control2 = (Control)obj;
-                string[] ctrl = { "Button", "CheckBox", "ComboBox", "DataGridView", "Label", "LinkLabel", "ListBox", "ListView", "RadioButton", "RichTextBox", "TextBox" };
-                string[] ctrlChild = { "GroupBox", "Panel", "TabPage", "Region", "DockGroup", "DockDocument" };
-                var a = control2.GetType().Name;
-                if (CheckController(control2, ctrl))
-                {
-                    UpdateColor(control2);
-                }
-                if (CheckController(control2, ctrlChild))
-                {
-                    UpdateChildControls(control2);
-                }
-            }
-        }
-
-        private static bool CheckController(Control control, IEnumerable<string> ends)
-        {
-            return ends.Any(t => control.GetType().Name.EndsWith(t, StringComparison.OrdinalIgnoreCase));
-        }
-
-        private static void UpdateColor(Control control)
-        {
-            control.BackColor = Theme.Colors.GreyBackground;
-            control.ForeColor = Theme.Colors.LightText;
         }
     }
 }

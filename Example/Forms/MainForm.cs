@@ -198,7 +198,7 @@ namespace Example
         {
 
             ThemeProvider.Theme = new DarkTheme();
-            ThemeProvider.ThemeUpdate(this);
+            Controller.ThemeUpdate(this);
             //BackColor = ThemeProvider.Theme.Colors.GreyBackground;
             this.Refresh();
         }
@@ -206,7 +206,7 @@ namespace Example
         private void lightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ThemeProvider.Theme = new LightTheme();
-            ThemeProvider.ThemeUpdate(this);
+            Controller.ThemeUpdate(this);
             //BackColor = ThemeProvider.Theme.Colors.GreyBackground;
             this.Refresh();
         }
