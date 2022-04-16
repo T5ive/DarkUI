@@ -37,7 +37,11 @@ public static class Controller
 
         GetControls(control);
     }
-
+    public static void BackgroundUpdate(Form form)
+    {
+        form.BackColor = ThemeProvider.Theme.Colors.GreyBackground;
+        form.Refresh();
+    }
     private static void GetControls(Form form)
     {
         foreach (var obj in form.Controls)
